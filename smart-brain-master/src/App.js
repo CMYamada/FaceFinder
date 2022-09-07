@@ -7,13 +7,14 @@ import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
+import About from './components/About/About';
 import './App.css';
  
 const particlesOptions = {
   //customize this to your liking
   particles: {
     number: {
-      value: 30,
+      value: 60,
       density: {
         enable: true,
         value_area: 800
@@ -76,7 +77,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-      fetch('http://localhost:3000/imageurl', {
+      fetch('https://glacial-cove-39566.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -86,7 +87,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://glacial-cove-39566.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -138,7 +139,11 @@ class App extends Component {
           : (
              route === 'signin'
              ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-             : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+             : (
+                route === 'register'
+                ? <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+                : <About onRouteChange={this.onRouteChange}/>
+             )
             )
         }
       </div>
